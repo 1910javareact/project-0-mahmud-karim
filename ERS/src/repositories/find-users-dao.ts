@@ -17,3 +17,16 @@ export function daoGetUserByUsernameAndPassword(username:string, password:string
         message: 'Invalid Credentials'
     }
 }
+
+//Gets the garden by id from database
+export function daoGetUserById(id:number):User{
+    for(let u of users){
+        if(u.userId === id){
+            return u
+        }
+    }
+    throw {
+        status:404,
+        message:'This user does not exist'
+    }
+}
