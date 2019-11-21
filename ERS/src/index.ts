@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyparser from 'body-parser'
-import { findUsersRouter } from './routers/find-users-router'
+import { usersRouter } from './routers/users-router'
 import { sessionMiddleware } from './middleware/session-middleware'
 import { getUserByUsernameAndPassword } from './services/find-users-service'
 
@@ -31,9 +31,9 @@ app.post('/login', (req,res)=>{
 })
 
 //Find Users end point
-app.use('/users', findUsersRouter)
+app.use('/users', usersRouter)
 
 //App is listening at this port
-app.listen(1001, ()=> {
+app.listen(9002, ()=> {
     console.log('app has started');
 })

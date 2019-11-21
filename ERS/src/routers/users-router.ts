@@ -1,9 +1,10 @@
 import express from 'express'
 import { getAllUsers } from '../services/find-users-service'
+import { authorization } from '../middleware/auth-middleware'
 
-export const findUsersRouter = express.Router()
+export const usersRouter = express.Router()
 
-findUsersRouter.get('', (req,res)=>{
+usersRouter.get('',[authorization(['finance-manager'])], (req,res)=>{
     let users = getAllUsers()
     if(users){
         res.json(users)

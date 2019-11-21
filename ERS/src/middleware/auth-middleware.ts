@@ -7,17 +7,16 @@ export function authorization(authRoles:string[]){
             res.status(401).send('Please Login')
             return
         }
-        //goes through and checks the authorization level
-        for(let userRole of req.session.user.roles){
-            if(authRoles.includes(userRole)){
-                isAuth = true
-            }
+        //checks the authorization level
+        if(req.session.user.role.role === 'finance-manager'){
+            isAuth = true
         }
+
         //if they are authorized they go to the next step other wise they get an error message
         if(isAuth){
             next()
         }else{
-            res.status(403).send('You are unauthorized for this endpoint')
+            res.status(401).send('The incoming token has expired')
         }
     }
 }
