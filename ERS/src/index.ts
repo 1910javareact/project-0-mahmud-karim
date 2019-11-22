@@ -3,6 +3,7 @@ import bodyparser from 'body-parser'
 import { usersRouter } from './routers/users-router'
 import { sessionMiddleware } from './middleware/session-middleware'
 import { getUserByUsernameAndPassword } from './services/find-users-service'
+import { reimbursementsRouter } from './routers/reimbursements-router'
 
 //Builds the express app
 const app = express()
@@ -30,8 +31,11 @@ app.post('/login', (req,res)=>{
     }
 })
 
-//Find Users end point
+//Find Users, end point
 app.use('/users', usersRouter)
+
+//Find reimbursements, end point
+app.use('/reimbursements', reimbursementsRouter)
 
 //App is listening at this port
 app.listen(9002, ()=> {

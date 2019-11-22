@@ -30,3 +30,17 @@ export function daoGetUserById(id:number):User{
         message:'This user does not exist'
     }
 }
+
+//saves the updated user to database
+export function daoUpdateUser(user:User){
+    for(let u of users){
+        if(u.userId === user.userId){
+            u = user
+            return u
+        }
+    }
+    throw {
+        status:404,
+        message:'This user does not exist'
+    }
+}

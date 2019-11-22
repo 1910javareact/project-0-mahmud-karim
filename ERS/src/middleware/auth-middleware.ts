@@ -8,7 +8,7 @@ export function authorization(authRoles:string[]){
             return
         }
         //checks the authorization level
-        if(req.session.user.role.role === 'finance-manager'){
+        if(authRoles.includes(req.session.user.role.role)){
             isAuth = true
         }
 
