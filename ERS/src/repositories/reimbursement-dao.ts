@@ -36,3 +36,17 @@ export function daoSaveOneReimbursement(reimbursement:Reimbursement){
     reimbursements.push(reimbursement)
     return true
 }
+
+//saves the update reimbursement to the database
+export function daoUpdateReimbursement(reimbursement:Reimbursement){
+    for(let r of reimbursements){
+        if(r.reimbursementId === reimbursement.reimbursementId){
+            r = reimbursement
+            return r
+        }
+    }
+    throw{
+        status:404,
+        message:'this reimbursement does not exist'
+    }
+}

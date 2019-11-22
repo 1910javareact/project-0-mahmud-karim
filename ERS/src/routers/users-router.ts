@@ -1,6 +1,5 @@
 import express from 'express'
-import * as uservice from '../services/find-users-service'
-import { getAllUsers, getUserById } from '../services/find-users-service'
+import { getAllUsers, getUserById, updateUser } from '../services/find-users-service'
 import { authorization } from '../middleware/auth-middleware'
 
 //creates the usersRouter object
@@ -38,7 +37,7 @@ usersRouter.get('/:id', [authorization(['finance-manager', 'admin', 'user'])], (
 usersRouter.patch('',[authorization(['admin'])], (req,res)=>{
     try{
         let {body} = req
-        let update = uservice.updateUser(body)
+        let update = updateUser(body)
         if (update){
             res.status(200).json(update)
         }else{

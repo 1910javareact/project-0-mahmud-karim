@@ -1,6 +1,6 @@
 import express from 'express'
 import { authorization } from '../middleware/auth-middleware'
-import { getReimbursementByStatusId, getReimbursementByUserId, saveOneReimbursement } from '../services/reimbursement-service'
+import { getReimbursementByStatusId, getReimbursementByUserId, saveOneReimbursement, updateReimbursement } from '../services/reimbursement-service'
 import { Reimbursement } from '../models/reimbursement'
 
 export const reimbursementsRouter = express.Router()
@@ -59,3 +59,16 @@ reimbursementsRouter.post('', [authorization(['finance-manager', 'admin', 'user'
 
 //Update Reimbursement
 //Endpoint, takes the input and if it exists updates only those parts
+reimbursementsRouter.patch('', [authorization(['finance-manager'])], (req,res)=>{
+    try{
+        let{body} = req
+        let update = updateReimbursement(body)
+        if(update){
+            res.status(200).json(update)
+        }else{
+            res.status(400).send('Reimbursement not found')
+        }
+    }catch(e){
+        res.status(e.status).send(e.message)
+    }
+})
