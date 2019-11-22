@@ -1,6 +1,7 @@
 import express from 'express'
 import { authorization } from '../middleware/auth-middleware'
-import { getReimbursementByStatusId, getReimbursementByUserId } from '../services/reimbursement-service'
+import { getReimbursementByStatusId, getReimbursementByUserId, saveOneReimbursement } from '../services/reimbursement-service'
+import { Reimbursement } from '../models/reimbursement'
 
 export const reimbursementsRouter = express.Router()
 
@@ -35,3 +36,26 @@ reimbursementsRouter.get('/author/userId/:userId', [authorization(['finance-mana
         }
     }
 })
+
+//Submit Reimbursement
+//Endpoint, post a new reimbursement
+reimbursementsRouter.post('', [authorization(['finance-manager', 'admin', 'user'])], (req, res)=>{
+    let {body} = req
+    let newR =  new Reimbursement(0,0,0,0,0,'',0,0,0)
+    for(let key in newR){
+        if(body[key] === undefined){
+            res.status(400).send('Please include all reimbursement fields')
+            break;
+        }else{
+            newR[key] = body[key]
+        }
+    }
+    if(saveOneReimbursement(newR)){
+        res.sendStatus(201)
+    }else{
+        res.sendStatus(500)
+    }
+})
+
+//Update Reimbursement
+//Endpoint, takes the input and if it exists updates only those parts

@@ -13,8 +13,6 @@ export function getUserByUsernameAndPassword(username:string, password:string){
 
 //gets the user be the Id
 export function getUserById(id:number):User{
-    console.log("Service: I am looking for user " + id);
-
     return daoGetUserById(id)
 }
 
