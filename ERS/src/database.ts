@@ -8,6 +8,6 @@ export let users = [
 ]
 
 export let reimbursements = [
-    new Reimbursement(1, 1, 100, 12, 22, "dinner", 3, 6, 7),
-    new Reimbursement(2, 2, 50, 12, 22, "gas", 8, 9, 10)
+    new Reimbursement(1, 1, 100, 12, 13, "dinner", 3, 6, 7),
+    new Reimbursement(2, 2, 50, 14, 15, "gas", 8, 9, 10)
 ]
