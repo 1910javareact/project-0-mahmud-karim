@@ -1,20 +1,40 @@
 import { User } from "../models/user";
 import { users } from "../database";
+import { PoolClient } from "pg";
+import { connectionPool } from ".";
+import { userDTOtoUser } from "../util/userdto-to-user";
 
 export function daoFindUsers():User[]{
     return users
 }
 
 //Checks the input username and password with the one on the database
-export function daoGetUserByUsernameAndPassword(username:string, password:string){
-    for(let u of users){
-        if(u.username === username && u.password === password){
-            return u
+export async function daoGetUserByUsernameAndPassword(username:string, password:string): Promise<User>{
+    let client: PoolClient
+
+    try {
+        client = await connectionPool.connect();
+        const result = await client.query('SELECT * FROM project0.user natural join project0.user_roles natural join project0.roles WHERE username = $1 and password = $2',
+        [username, password])
+        if (result.rowCount === 0){
+            throw 'Invalid Credentials';
+        }else{
+            return userDTOtoUser(result.rows)
         }
-    }
-    throw{
-        status: 400,
-        message: 'Invalid Credentials'
+    } catch (e) {
+        if (e === 'Invalid Credentials'){
+            throw {
+                status: 400,
+                message: 'Invalid Credentials'
+            }
+        }else {
+            throw {
+                status: 500,
+                message: 'Internal Server Error'
+            }
+        }
+    }finally{
+        client && client.release();
     }
 }
 

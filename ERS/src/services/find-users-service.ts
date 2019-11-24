@@ -7,7 +7,7 @@ export function getAllUsers():User[]{
 }
 
 //gets the user name and password form the dao
-export function getUserByUsernameAndPassword(username:string, password:string){
+export function getUserByUsernameAndPassword(username:string, password:string): Promise<User>{
     return daoGetUserByUsernameAndPassword(username, password)
 }
 
