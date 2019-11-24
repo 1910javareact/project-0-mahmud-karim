@@ -84,12 +84,18 @@ export async function daoUpdateUser(user: User): Promise<User> {
     client = await connectionPool.connect()
     try {
         await client.query('BEGIN')
-        console.log(user.username, user.password, user.firstName, user.lastName, user.email, user.userId);
-        
-        const result = await client.query('update project_0.user set username = $1, password = $2, first_name = $3, last_name = $4, email = $5 where user_id = $6',
+        await client.query('update project0.user set username = $1, password = $2, first_name = $3, last_name = $4, email = $5 where user_id = $6',
         [user.username, user.password, user.firstName, user.lastName, user.email, user.userId])
+        await client.query('update project0.user_roles set role_id = $1 where user_id = $2',
+        [user.role.roleId, user.userId])
         await client.query('COMMIT')
-        return result.rows[0]
+        const result = await client.query('SELECT * FROM project0.user natural join project0.user_roles natural join project0.roles where user_id = $1', 
+        [user.userId])
+        if (result.rowCount > 0) {
+            return userDTOtoUser(result.rows)
+        } else {
+            throw 'No Such User'
+        }
     } catch (e) {
         await client.query('ROLLBACK');
         throw {

@@ -51,11 +51,7 @@ usersRouter.patch('',[authorization(['admin'])], async (req,res)=>{
     try{
         let {body} = req
         const update = await updateUser(body)
-        if (update){
-            res.status(200).json(update)
-        }else{
-            res.status(400).send('User not found')
-        }
+        res.status(200).json(update)
     }catch(e){
         res.status(e.status).send(e.message)
     }
