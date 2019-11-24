@@ -47,10 +47,10 @@ async (req,res)=>{
 
 //Update User
 //Uses the UserId to update the feilds provided
-usersRouter.patch('',[authorization(['admin'])], (req,res)=>{
+usersRouter.patch('',[authorization(['admin'])], async (req,res)=>{
     try{
         let {body} = req
-        let update = updateUser(body)
+        const update = await updateUser(body)
         if (update){
             res.status(200).json(update)
         }else{
