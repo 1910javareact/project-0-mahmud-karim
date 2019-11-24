@@ -2,13 +2,21 @@
 import { User} from "../models/user";
 import { daoFindUsers, daoGetUserByUsernameAndPassword, daoGetUserById, daoUpdateUser } from "../repositories/find-users-dao";
 
-export function getAllUsers():User[]{
-    return daoFindUsers()
+export function getAllUsers():Promise<User[]>{
+    try {
+        return daoFindUsers()
+    } catch (e) {
+        throw e
+    }
 }
 
 //gets the user name and password form the dao
 export function getUserByUsernameAndPassword(username:string, password:string): Promise<User>{
-    return daoGetUserByUsernameAndPassword(username, password)
+    try {
+        return daoGetUserByUsernameAndPassword(username, password)    
+    } catch (e) {
+        throw e
+    }
 }
 
 //gets the user be the Id

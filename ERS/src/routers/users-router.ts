@@ -7,12 +7,13 @@ export const usersRouter = express.Router()
 
 //Find Users
 //Checks for authorization then gets all the users
-usersRouter.get('',[authorization(['finance-manager'])], (req,res)=>{
-    let users = getAllUsers()
-    if(users){
+usersRouter.get('',[authorization(['finance-manager'])], 
+async (req,res)=>{
+    try {
+        const users = await getAllUsers()
         res.status(200).json(users)
-    }else{
-        res.sendStatus(500)
+    } catch (e) {
+        res.status(e.status).send(e.message);
     }
 })
 
