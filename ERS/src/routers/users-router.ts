@@ -19,14 +19,26 @@ async (req,res)=>{
 
 //Find Users By Id
 //Checks the authorization and then gets the user based on Id if matches
-usersRouter.get('/:id', [authorization(['finance-manager', 'admin', 'user'])], (req,res)=>{
-    let id = +req.params.id
+usersRouter.get('/:id', [authorization(['finance-manager', 'admin', 'user'])], 
+async (req,res)=>{
+    const id = +req.params.id
     if(isNaN(id)){
         res.sendStatus(400)
+    }else if (req.session.user.role.role === 'finance-manager'){
+        try {
+            const user = await getUserById(id)
+            res.status(200).json(user)
+        } catch (error) {
+            res.status(error.status).send(error.message)
+        }
     }else{
         try {
-            let user = getUserById(id)
-            res.status(200).json(user)
+            const user = await getUserById(id)
+            if (req.session.user.userId === user.userId){
+                res.status(200).json(user)
+            }else{
+                res.sendStatus(401)
+            }
         } catch (error) {
             res.status(error.status).send(error.message)
         }

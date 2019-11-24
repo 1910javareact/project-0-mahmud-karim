@@ -52,15 +52,30 @@ export async function daoGetUserByUsernameAndPassword(username:string, password:
 }
 
 //Gets the garden by id from database
-export function daoGetUserById(id:number):User{
-    for(let u of users){
-        if(u.userId === id){
-            return u
+export async function daoGetUserById(id:number):Promise<User>{
+    let client: PoolClient
+    try {
+        client = await connectionPool.connect()
+        const result = await client.query('SELECT * FROM project0.user natural join project0.user_roles natural join project0.roles where user_id = $1', [id])
+        if (result.rowCount > 0){
+            return userDTOtoUser(result.rows)
+        }else{
+            throw 'No Such User'
         }
-    }
-    throw {
-        status:404,
-        message:'This user does not exist'
+    } catch (e) {
+        if (e === 'No Such User'){
+            throw{
+                status:404,
+                message: 'This user does not exist'
+            }
+        }else{
+            throw{
+                status:500,
+                message: 'Internal Server Error'
+            }
+        }
+    }finally{
+        client && client.release();
     }
 }
 

@@ -20,7 +20,7 @@ export function getUserByUsernameAndPassword(username:string, password:string): 
 }
 
 //gets the user be the Id
-export function getUserById(id:number):User{
+export function getUserById(id:number):Promise<User>{
     return daoGetUserById(id)
 }
 
@@ -33,5 +33,5 @@ export function updateUser(user:User){
             dUser[u] = user[u];
         }
     }
-    return daoUpdateUser(dUser)
+    return daoUpdateUser(null)
 }
