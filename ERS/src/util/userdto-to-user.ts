@@ -2,7 +2,7 @@ import { UserDTO } from "../dtos/user-dto";
 import { User } from "../models/user";
 import { Role } from "../models/role";
 
-//Takes array of userDTOs and loops through it and grabs all role names
+//Takes array of userDTOs, grabs role name and id
 //them buids a new user object and passes in all the values
 export function userDTOtoUser(uD: UserDTO[]): User {
     let role = new Role(uD[0].role_id, uD[0].role_name)
