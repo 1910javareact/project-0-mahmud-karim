@@ -89,11 +89,11 @@ export async function daoUpdateReimbursement(r:Reimbursement):Promise<Reimbursem
     client = await connectionPool.connect()
     try {
         await client.query('BEGIN')
-        await client.query('update project0.reimbursement set status = $1 where reimbursement_id = $2',
-        [r.status, r.reimbursementId])
-        await client.query('COMMIT')
+        await client.query('update project0.reimbursement set status = $1, description = $3 where reimbursement_id = $2',
+        [r.status, r.reimbursementId, "testing"])
         const result = await client.query('SELECT * FROM project0.reimbursement where reimbursement_id = $1',
         [r.reimbursementId])
+        await client.query('COMMIT')
         return reimbursementDTOtoreimbursement(result.rows)
     } catch (e) {
         await client.query('ROLLBACK');
