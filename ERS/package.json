@@ -4,12 +4,15 @@
   "description": "The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time.",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint src/**/*.ts",
+    "lint:fix": "tslint src/**/*.ts --fix"
   },
   "author": "Mahmud Karim",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.2",
+    "ts-lint": "^4.5.1",
     "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
   },

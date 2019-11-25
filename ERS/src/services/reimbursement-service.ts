@@ -1,38 +1,38 @@
-import { daoGetReimbursementByStatusId, daoGetReimbursementByUserId, daoSaveOneReimbursement, daoUpdateReimbursement } from "../repositories/reimbursement-dao";
-import { Reimbursement } from "../models/reimbursement";
+import { daoGetReimbursementByStatusId, daoGetReimbursementByUserId, daoSaveOneReimbursement, daoUpdateReimbursement } from '../repositories/reimbursement-dao';
+import { Reimbursement } from '../models/reimbursement';
 
-//gets the reimbursement form the doa
-export function getReimbursementByStatusId(id:number):Promise<Reimbursement[]>{
+// gets the reimbursement form the doa
+export function getReimbursementByStatusId(id: number): Promise<Reimbursement[]> {
     try {
-        return daoGetReimbursementByStatusId(id)
+        return daoGetReimbursementByStatusId(id);
     } catch (e) {
-        throw e
+        throw e;
     }
 }
 
-//gets the reimbursement form the doa
-export function getReimbursementByUserId(id:number):Promise<Reimbursement[]>{
+// gets the reimbursement form the doa
+export function getReimbursementByUserId(id: number): Promise<Reimbursement[]> {
     try {
-        return daoGetReimbursementByUserId(id)
+        return daoGetReimbursementByUserId(id);
     } catch (e) {
-        throw e
+        throw e;
     }
 }
 
-//sends the reimbursement to the doa
-export function saveOneReimbursement(reimbursement:Reimbursement):Promise<Reimbursement>{
+// sends the reimbursement to the doa
+export function saveOneReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
     try {
-        return daoSaveOneReimbursement(reimbursement)
+        return daoSaveOneReimbursement(reimbursement);
     } catch (e) {
-        throw e
+        throw e;
     }
 }
 
-//updates the reimbursement
-export async function updateReimbursement(reimbursement:Reimbursement):Promise<Reimbursement>{
+// updates the reimbursement
+export async function updateReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
     try {
-        return daoUpdateReimbursement(reimbursement)
+        return daoUpdateReimbursement(reimbursement);
     } catch (e) {
-        throw e
+        throw e;
     }
 }

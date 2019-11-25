@@ -1,9 +1,9 @@
-import { ReimbursementDTO } from "../dtos/reimbursement-dto";
-import { Reimbursement } from "../models/reimbursement";
+import { ReimbursementDTO } from '../dtos/reimbursement-dto';
+import { Reimbursement } from '../models/reimbursement';
 
 
-//Takes in a reimbursementDTO and converts it into a reimbursement object
-export function reimbursementDTOtoreimbursement(rD: ReimbursementDTO[]):Reimbursement{
+// Takes in a reimbursementDTO and converts it into a reimbursement object
+export function reimbursementDTOtoreimbursement(rD: ReimbursementDTO[]): Reimbursement {
     return new Reimbursement(
         rD[0].reimbursement_id,
         rD[0].author,
@@ -14,24 +14,24 @@ export function reimbursementDTOtoreimbursement(rD: ReimbursementDTO[]):Reimburs
         rD[0].resolver,
         rD[0].status,
         rD[0].type
-    )
+    );
 }
 
-//Turns any set of user reimbursementDTOs to Reimbursements
-export function multiReimbursementDTOConverter(rD: ReimbursementDTO[]): Reimbursement[]{
-    let currentReimbursement: ReimbursementDTO[] = []
-    const result: Reimbursement[] = []
-    for (const r of rD){
-        if (currentReimbursement.length === 0){
-            currentReimbursement.push(r)
-        }else if (currentReimbursement[0].reimbursement_id === r.reimbursement_id){
-            currentReimbursement.push(r)
-        }else{
-            result.push(reimbursementDTOtoreimbursement(currentReimbursement))
-            currentReimbursement = []
-            currentReimbursement.push(r)
+// Turns any set of user reimbursementDTOs to Reimbursements
+export function multiReimbursementDTOConverter(rD: ReimbursementDTO[]): Reimbursement[] {
+    let currentReimbursement: ReimbursementDTO[] = [];
+    const result: Reimbursement[] = [];
+    for (const r of rD) {
+        if (currentReimbursement.length === 0) {
+            currentReimbursement.push(r);
+        }else if (currentReimbursement[0].reimbursement_id === r.reimbursement_id) {
+            currentReimbursement.push(r);
+        }else {
+            result.push(reimbursementDTOtoreimbursement(currentReimbursement));
+            currentReimbursement = [];
+            currentReimbursement.push(r);
         }
     }
-    result.push(reimbursementDTOtoreimbursement(currentReimbursement))
-    return result
+    result.push(reimbursementDTOtoreimbursement(currentReimbursement));
+    return result;
 }
