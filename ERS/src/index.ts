@@ -16,20 +16,21 @@ app.use(sessionMiddleware);
 
 // Has the user enter login credentails
 app.post('/login', async (req, res) => {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
     // Does not enter both username and password
     if (!username || !password) {
         res.status(400).send('Please have a username and password field');
+    } else {
+        // Tries to check if the username and password exists else throws an error message
+        try {
+            const user = await getUserByUsernameAndPassword(username, password);
+            req.session.user = user;
+            res.json(user);
+        } catch (e) {
+            res.status(e.status).send(e.message);
+        }
     }
-    // Tries to check if the username and password exists else throws an error message
-    try {
-        const user = await getUserByUsernameAndPassword(username, password);
-        req.session.user = user;
-        res.json(user);
-    } catch (e) {
-        res.status(e.status).send(e.message);
-    }
-});
+})
 
 // Find Users, end point
 app.use('/users', usersRouter);
