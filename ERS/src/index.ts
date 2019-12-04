@@ -30,7 +30,7 @@ app.post('/login', async (req, res) => {
             res.status(e.status).send(e.message);
         }
     }
-})
+});
 
 // Find Users, end point
 app.use('/users', usersRouter);
