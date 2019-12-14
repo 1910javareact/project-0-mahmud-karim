@@ -4,12 +4,16 @@ import { usersRouter } from './routers/users-router';
 import { sessionMiddleware } from './middleware/session-middleware';
 import { getUserByUsernameAndPassword } from './services/find-users-service';
 import { reimbursementsRouter } from './routers/reimbursements-router';
+import { corsFilter } from './middleware/cors-middleware';
 
 // Builds the express app
 const app = express();
 
 // Parses the json into objects
 app.use(bodyparser.json());
+
+// A Filter to pass through cors
+app.use(corsFilter)
 
 // Creates a new session object for each req object
 app.use(sessionMiddleware);
